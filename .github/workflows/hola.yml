@@ -9,3 +9,9 @@ jobs:
     steps:
       - name: Di Hola
         run: echo "Hello World Juan Diego Pardo Zamarripa"
+        
+      - name: Listar carpetas
+        run: ls -l
+        
+      - name: Mostrar fecha del sistema
+        run: date

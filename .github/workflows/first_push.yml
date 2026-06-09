@@ -1,13 +1,23 @@
-name: My_first_push
-on: 
-  pull_request: 
+name: Desafio_02_Pull_Request
+
+on:
+  pull_request: # Se activa específicamente al abrir, sincronizar o editar un PR
 
 jobs:
   Tarea1:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest # O ubuntu-22.04, ambas funcionan perfecto
 
     steps:
-      - name: Datos del push
-        run:  |
-          echo "Autor del push ${{ github.event.head_commit.author.name }}"
-          echo "Mensaje ${{ github.event.head_commit.message }}"
+      - name: Mostrar datos del Pull Request
+        run: |
+          echo "=== DATOS ORIGEN Y DESTINO ==="
+          echo "Rama origen (head ref): ${{ github.event.pull_request.head.ref }}"
+          echo "Rama destino (base ref): ${{ github.event.pull_request.base.ref }}"
+          
+          echo "=== DETALLES DEL PR ==="
+          echo "Título: ${{ github.event.pull_request.title }}"
+          echo "Contenido / Descripción: ${{ github.event.pull_request.body }}"
+          echo "Estado: ${{ github.event.pull_request.state }}"
+          
+          echo "=== ¿YA FUE FUSIONADO? ==="
+          echo "Fusionado (Merged): ${{ github.event.pull_request.merged }}"

@@ -1,23 +1,34 @@
-name: Desafio_02_Pull_Request
+name: Desafio_02_Completo
 
 on:
-  pull_request: # Se activa específicamente al abrir, sincronizar o editar un PR
+  push:
+  pull_request:
 
 jobs:
   Tarea1:
-    runs-on: ubuntu-latest # O ubuntu-22.04, ambas funcionan perfecto
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Mostrar datos del Pull Request
+      # --- ESTE BLOQUE SOLO SE EJECUTA SI ES UN PUSH ---
+      - name: Desplegar datos del push
+        if: github.event_name == 'push'
         run: |
-          echo "=== DATOS ORIGEN Y DESTINO ==="
-          echo "Rama origen (head ref): ${{ github.event.pull_request.head.ref }}"
-          echo "Rama destino (base ref): ${{ github.event.pull_request.base.ref }}"
-          
-          echo "=== DETALLES DEL PR ==="
+          echo "=== DATOS DEL PUSH ==="
+          echo "Autor: ${{ github.event.head_commit.author.name }}"
+          echo "Mensaje: ${{ github.event.head_commit.message }}"
+          echo "ID del Commit: ${{ github.sha }}"
+          echo "URL del Commit: ${{ github.event.head_commit.url }}"
+          echo "Rama: ${{ github.ref_name }}"
+          echo "Repositorio: ${{ github.repository }}"
+
+      # --- ESTE BLOQUE SOLO SE EJECUTA SI ES UN PULL REQUEST ---
+      - name: Desplegar datos del Pull Request
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "=== DATOS DEL PULL REQUEST ==="
+          echo "Rama origen: ${{ github.event.pull_request.head.ref }}"
+          echo "Rama destino: ${{ github.event.pull_request.base.ref }}"
           echo "Título: ${{ github.event.pull_request.title }}"
-          echo "Contenido / Descripción: ${{ github.event.pull_request.body }}"
+          echo "Contenido: ${{ github.event.pull_request.body }}"
           echo "Estado: ${{ github.event.pull_request.state }}"
-          
-          echo "=== ¿YA FUE FUSIONADO? ==="
-          echo "Fusionado (Merged): ${{ github.event.pull_request.merged }}"
+          echo "¿Ya fue fusionado?: ${{ github.event.pull_request.merged }}"

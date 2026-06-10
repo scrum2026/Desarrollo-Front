@@ -10,7 +10,7 @@ function App() {
       background: '#f0f4ff'
     }}>
       <h1>¡Bienvenido! 👋</h1>
-      <p>Mi primer despliegue en Vercel</p>
+      <p>Mi primer despliegue en Vercel Actualizacion</p>
     </div>
   )
 }
